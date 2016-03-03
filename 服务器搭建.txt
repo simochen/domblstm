@@ -1,0 +1,20 @@
+在服务器上搭建特征选择程序。
+Linux登陆指令：
+	ssh -p 7930 chenxiao@202.120.1.118
+传输指令：
+	pscp -P 7930 /home/simochen/file1 chenxiao@202.120.1.118:/home/chenxiao
+
+1、将 blast 、 DISOPRED 、 SCRATCH 三个文件夹拷贝到服务器/home/chenxiao/目录下
+2、在 /DISOPRED/src/ 目录下执行
+	make clean
+	make
+	make install
+3、修改 /DISOPRED/run_disopred.pl 文件
+	my $NCBI_DIR = "/home/chenxiao/blast/bin/";
+	my $SEQ_DB = "/home/mpiuser/ur90/uniref90";
+4、在 /DISOPRED/ 目录下运行例子
+	./run_disopred.pl examples/example.fasta
+5、blastpgp 执行命令
+	comdline = sprintf('"/home/chenxiao/blast/bin/blastpgp" -e 0.001 -j 3 -h 0.001 -i "%s" -d "/home/mpiuser/ur90/uniref90" -Q "%s" -o "%s"',tempfile,pssmfile,psfile);
+        status=system(comdline);
+
