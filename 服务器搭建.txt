@@ -3,6 +3,7 @@ Linux登陆指令：
 	ssh -p 7930 chenxiao@202.120.1.118
 传输指令：
 	pscp -P 7930 /home/simochen/file1 chenxiao@202.120.1.118:/home/chenxiao
+(需在本地输入指令)
 
 1、将 blast 、 DISOPRED 、 SCRATCH 三个文件夹拷贝到服务器/home/chenxiao/目录下
 2、在 /DISOPRED/src/ 目录下执行
@@ -36,5 +37,23 @@ blastpgp 命令解析
 -d 使用的数据库
 -o 输出文件
 
+6、利用 SCRATCH 获得 SS、SA 特征
+(1) 在 /SCRATCH/ 目录下执行
+	perl install.pl
+(2) 在 /SCRATCH/doc/ 目录下执行
+	../bin/run_SCRATCH-1D_predictors.sh test.fasta test.out 1
+运行结果如下，报错：
 
+###################################
+#                                 #
+#  SCRATCH-1D release 1.1 (2015)  #
+#                                 #
+###################################
 
+[SCRATCH-1D_predictions.pl] 4 protein sequence(s) found
+[SCRATCH-1D_predictions.pl] generating sequence profiles...
+chmod: cannot access `/home/chenxiao/SCRATCH/tmp/20160304-191353-401436843826/dataset.pro': No such file or directory
+[SCRATCH-1D_predictions.pl] failed generating sequence profiles...
+
+生成 profile 出错。
+经测试发现文件权限不够，运行 chmod -R 755 ./SCRATCH
