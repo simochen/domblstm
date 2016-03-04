@@ -56,4 +56,5 @@ chmod: cannot access `/home/chenxiao/SCRATCH/tmp/20160304-191353-401436843826/da
 [SCRATCH-1D_predictions.pl] failed generating sequence profiles...
 
 生成 profile 出错。
-经测试发现文件权限不够，运行 chmod -R 755 ./SCRATCH
+经测试发现文件权限不够，运行 chmod -R 755 SCRATCH
+再次执行上述指令，运行成功。
