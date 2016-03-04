@@ -9,12 +9,14 @@ $dir = dirname($seqfile);
 $base = basename($seqfile,@suffixlist);
 
 $dom = (join "/", $dir, $base).'_dom.txt';
+$target = (join "/", $dir, $base).'_target.txt';
 
 open(seq, "<$seqfile");
 @lines = <seq>;
 close(seq);
 
 open(dom, ">$dom");
+open(tar, ">$target");
 
 shift(@lines);
 shift(@lines);
@@ -53,12 +55,18 @@ while ($line = shift(@lines)){
 #line6: domain number, position
 	shift(@lines);
 #line7: (T/N) domain boundary region
-	shift(@lines);
+	$line = shift(@lines);
+	for($i = 0; $i < $len; $i++){
+		$tar = substr($line, $i, 1);
+		if ($tar eq "T"){ print tar "1 "; }
+		else{ print tar "0 "; }
+	}
+	print tar "\n";
 #line8: empty line
 	shift(@lines);
 
 # COMBINE SS AND SA FILES
-	$outF = (join "/", $dir, $domNum).'.txt';
+	$outF = (join "/", $dir, $domNum).'_ssa.txt';
 	open(ss, "<$outSS");
 	@ssFi = <ss>;
 	close(ss);
@@ -78,5 +86,5 @@ while ($line = shift(@lines)){
 	$domNum++;
 }
 
-close(dom);
+close(dom, tar);
 
