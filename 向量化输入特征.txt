@@ -1,0 +1,4 @@
+1. 生成单个序列fasta文件、ssa特征、目标序列文件
+	./genFeature/getSeq.pl ./dataset/multi384.dom
+2. 运行blastpgp，生成PSSM特征，合并生成输入特征
+	./genFeature/runPSSM.pl
