@@ -23,14 +23,20 @@ shift(@lines);
 
 $domNum = 1;
 while ($line = shift(@lines)){
+	$outFasta = (join "/", $dir, $domNum).'_mul.fasta';
+	open(fasta, ">$outFasta");
 #line1: sequence name	
 	print dom ">$line";
+	print fasta ">$line";
 #line2: number of residues
 	$len = shift(@lines);
 	chomp($len);
 #line3: sequence
 	$line = shift(@lines);
 	print dom "$line\n";
+	chomp($line);
+	print fasta "$line";
+	close(fasta);
 #line4: SS (H:helix, E: strand, C: coil)
 	$outSS = (join "/", $dir, $domNum).'.ss';
 	open(ss, ">$outSS");
