@@ -2,8 +2,8 @@
 
 use File::Basename;
 
-$seqfile = $ARGV[0];
-$dir = $ARGV[1];
+$seqfile = $1;
+$dir = $2;
 
 @suffixlist = qw(.pssm .blast .fasta .dom);
 #$dir = dirname($seqfile);
