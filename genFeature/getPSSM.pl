@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-# USAGE: getPSSM.pl pssmfile dir
-
 use File::Basename;
 
 $pssmfile = $ARGV[0];
@@ -26,10 +24,12 @@ shift(@lines);
 $line = shift(@lines);
 chomp($line);
 while ($line){	
-	$data = substr($line, 10, 59);
+	$pos = index($line, "   ", 10);
+	$data = substr($line, 10, $pos-10);
 	print out "$data\n";
 	$line = shift(@lines);
 	chomp($line);
 }
 
 close(out);
+

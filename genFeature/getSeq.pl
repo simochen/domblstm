@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-# USAGE: getSEQ.pl seqfile dir
-
 use File::Basename;
 
 $seqfile = $ARGV[0];
@@ -96,3 +94,4 @@ while ($line = shift(@lines)){
 }
 
 close(dom, tar);
+
