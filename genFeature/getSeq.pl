@@ -1,9 +1,11 @@
 #!/usr/bin/perl
 
+# USAGE: getSEQ.pl seqfile dir
+
 use File::Basename;
 
-$seqfile = $1;
-$dir = $2;
+$seqfile = $ARGV[0];
+$dir = $ARGV[1];
 
 @suffixlist = qw(.pssm .blast .fasta .dom);
 #$dir = dirname($seqfile);
@@ -94,4 +96,3 @@ while ($line = shift(@lines)){
 }
 
 close(dom, tar);
-

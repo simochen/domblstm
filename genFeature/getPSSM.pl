@@ -1,16 +1,17 @@
 #!/usr/bin/perl
 
+# USAGE: getPSSM.pl pssmfile dir
+
 use File::Basename;
 
 $pssmfile = $ARGV[0];
+$dir = $ARGV[1];
 
 @suffixlist = qw(.pssm .blast .fasta .dom);
 #$dir = dirname($pssmfile);
-$dir = "/home/simochen/Prog/genTest/multi";
 $base = basename($pssmfile,@suffixlist);
 
 $output = (join "/", $dir, $base).'_pssm.txt';
-print $output,"\n";
 
 open(pssm, "<$pssmfile");
 @lines = <pssm>;
@@ -32,4 +33,3 @@ while ($line){
 }
 
 close(out);
-

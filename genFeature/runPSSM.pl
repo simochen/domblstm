@@ -1,6 +1,8 @@
 #!/usr/bin/perl
 
-$dir = $1;
+# USAGE: runPSSM.pl dir
+
+$dir = $ARGV[0];
 $blast = "/home/chenxiao/blast/bin/blastpgp";
 $db = "/home/mpiuser/ur90/uniref90";
 $procPSSM = "/home/chenxiao/genFeature/getPSSM.pl";
