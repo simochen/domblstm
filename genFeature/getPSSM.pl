@@ -5,7 +5,8 @@ use File::Basename;
 $pssmfile = $ARGV[0];
 
 @suffixlist = qw(.pssm .blast .fasta .dom);
-$dir = dirname($pssmfile);
+#$dir = dirname($pssmfile);
+$dir = "/home/simochen/Prog/genTest/multi";
 $base = basename($pssmfile,@suffixlist);
 
 $output = (join "/", $dir, $base).'_pssm.txt';

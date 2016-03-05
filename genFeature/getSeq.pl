@@ -2,10 +2,11 @@
 
 use File::Basename;
 
-$seqfile = $ARGV[0];
+$seqfile = $1;
+$dir = $2;
 
 @suffixlist = qw(.pssm .blast .fasta .dom);
-$dir = dirname($seqfile);
+#$dir = dirname($seqfile);
 $base = basename($seqfile,@suffixlist);
 
 $dom = (join "/", $dir, $base).'_dom.txt';
@@ -23,7 +24,7 @@ shift(@lines);
 
 $domNum = 1;
 while ($line = shift(@lines)){
-	$outFasta = (join "/", $dir, $domNum).'_mul.fasta';
+	$outFasta = (join "/", $dir, $domNum).'.fasta';
 	open(fasta, ">$outFasta");
 #line1: sequence name	
 	print dom ">$line";
