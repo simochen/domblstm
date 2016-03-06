@@ -1,6 +1,15 @@
 1. 生成单个序列fasta文件、ssa特征、目标序列文件
 	getSeq.pl domfile dir
 	./genFeature/getSeq.pl ./dataset/multi354.dom /home/chenxiao/dataset/multi
-2. 运行blastpgp，生成PSSM特征，合并生成输入特征
-	runPSSM.pl dir
-	./genFeature/runPSSM.pl /home/chenxiao/dataset/multi
+2. 运行blastpgp，
+	runBlast.pl dir
+	./genFeature/runBlast.pl /home/chenxiao/dataset/multi
+3. 生成PSSM特征，合并生成输入特征
+	getFeat.pl dir
+	./genFeature/getFeat.pl /home/chenxiao/dataset/multi
+4. 将全部序列txt文件，分割成10个一组的片段fasta文件
+	getDomSeg.pl _dom.txt dir
+	./getFeature/getDomSeg.pl ./dataset/multi354_dom.txt /home/chenxiao/dataset/multiSSA
+5. 对每个片段fasta文件运行 SRATCH 提取特征
+	runScratch.pl dir
+	./getFeature/runScratch.pl ./dataset/multiSSA
