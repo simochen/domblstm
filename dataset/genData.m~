@@ -1,0 +1,13 @@
+myfid = fopen('multi354_target.txt');
+i = 0;
+while ~feof(myfid)
+    multi_y{i} =  fgetl(myfid)';
+end
+fclose(myfid);
+
+
+syfid = fopen('single963_target.txt');
+while ~feof(syfid)
+    single_y{i} =  fgetl(syfid)';
+end
+fclose(syfid);
