@@ -25,6 +25,8 @@ $line = shift(@lines);
 chomp($line);
 while ($line){	
 	$pos = index($line, "   ", 10);
+	$check = substr($line, $pos-3, 3);
+	if($check eq "100"){ $pos -= 5; }
 	$data = substr($line, 10, $pos-10);
 	print out "$data\n";
 	$line = shift(@lines);

@@ -2,16 +2,15 @@
 
 use File::Basename;
 
-$seqfile = $ARGV[0];
+$ssafile = $ARGV[0];
 $dir = $ARGV[1];
 
 @suffixlist = qw(.pssm .blast .fasta .dom);
 #$dir = dirname($seqfile);
 $base = basename($seqfile,@suffixlist);
-$updir = $dir."/..";
 
-$dom = (join "/", $updir, $base).'_dom.txt';
-$target = (join "/", $updir, $base).'_target.txt';
+$dom = (join "/", $dir, $base).'_dom.txt';
+$target = (join "/", $dir, $base).'_target.txt';
 
 open(seq, "<$seqfile");
 @lines = <seq>;
@@ -35,7 +34,7 @@ while ($line = shift(@lines)){
 	chomp($len);
 #line3: sequence
 	$line = shift(@lines);
-	print dom "$line";
+	print dom "$line\n";
 	chomp($line);
 	print fasta "$line";
 	close(fasta);
