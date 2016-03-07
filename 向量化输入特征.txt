@@ -5,8 +5,8 @@
 	runBlast.pl dir
 	./genFeature/runBlast.pl /home/chenxiao/dataset/multi
 3. 生成PSSM特征，合并生成输入特征
-	getFeat.pl dir
-	./genFeature/getFeat.pl /home/chenxiao/dataset/multi
+	getFeat.pl pssmdir ssadir ssatype seqNum (outdir)
+	./genFeature/getFeat.pl /home/chenxiao/dataset/multi /home/chenxiao/dataset/multi_s8a20 ss8acc20 354
 4. 将全部序列txt文件，分割成10个一组的片段fasta文件
 	getDomSeg.pl _dom.txt dir
 	./getFeature/getDomSeg.pl ./dataset/multi354_dom.txt /home/chenxiao/dataset/multiSSA

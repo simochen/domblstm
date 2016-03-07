@@ -1,24 +1,31 @@
 #!/usr/bin/perl
 
-$dir = $ARGV[0];
+#USAGE: getFeat.pl pssmdir ssadir seqNum (outdir)
+
+$pssmdir = $ARGV[0];
+$ssadir = $ARGV[1];
+$ssatype = $ARGV[2];
+$seqNum = $ARGV[3];
+if(@ARGV == 4){ $outdir = $ssadir; }
+else{ $outdir = $ARGV[4]; }
 
 $procPSSM = "/home/chenxiao/genFeature/getPSSM.pl";
-for($i = 1; $i <= 354; $i++){
-	$pssm = (join "/", $dir, $i).'.pssm';
+for($i = 1; $i <= $seqNum; $i++){
+	$pssm = (join "/", $pssmdir, $i).'.pssm';
 	
 	print "generate PSSM features........\n";
-	`$procPSSM $pssm $dir`;
+	`$procPSSM $pssm $pssmdir`;
 #COMBINE PSSM AND SSA FEATURES
 	print "comebine feature file.........\n";
-	$psf = (join "/", $dir, $i).'_pssm.txt';
+	$psf = (join "/", $pssmdir, $i).'_pssm.txt';
 	open(psf, "<$psf");
 	@pssmlines = <psf>;
 	close(psf);
-	$ssa = (join "/", $dir, $i).'_ssa.txt';
+	$ssa = (join "/", $ssadir, $i)."_".$ssatype.".txt";
 	open(ssa, "<$ssa");
 	@ssalines = <ssa>;
 	close(ssa);
-	$out = (join "/", $dir, $i).'.txt';
+	$out = (join "/", $outdir, $i).'.txt';
 	open(out, ">$out");
 	while($ssaline = shift(@ssalines)){
 		$pssmline = shift(@pssmlines);
