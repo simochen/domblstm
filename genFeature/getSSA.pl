@@ -1,97 +1,42 @@
 #!/usr/bin/perl
 
+# generate SS and SA features
+# by calling getSS, getSA, etc.
+# USAGE: getSSA.pl sstype satype segNum indir (outdir)
+
 use File::Basename;
 
-$ssafile = $ARGV[0];
-$dir = $ARGV[1];
+$sstype = $ARGV[0];
+$satype = $ARGV[1];
+$segNum = $ARGV[2];
+$indir = $ARGV[3];
+if(@ARGV == 4){ $outdir = $indir; }
+else{ $outdir = $ARGV[4]; }
 
-@suffixlist = qw(.pssm .blast .fasta .dom);
-#$dir = dirname($seqfile);
-$base = basename($seqfile,@suffixlist);
+#@suffixlist = qw(.ss .ss8 .acc .acc20 .fasta);
 
-$dom = (join "/", $dir, $base).'_dom.txt';
-$target = (join "/", $dir, $base).'_target.txt';
+#$rundir = "/home/chenxiao/getFeature/";
+$rundir = "./";
+# run file profix
+$runpro = $rundir."get";
+$runcb = $rundir."combineSSA.pl";
+for($i = 1; $i <= $segNum; $i++){
+	$base = "seg".$i;
+	# segment profix
+	$profix = join "/", $indir, $base;
+	$ssfile = join ".", $profix, $sstype;
+	$safile = join ".", $profix, $satype;
+	$runss = $runpro.uc($sstype).".pl";
+	$runsa = $runpro.uc($satype).".pl";
+	`$runss $ssfile $outdir`;
+	`$runsa $safile $outdir`;
 
-open(seq, "<$seqfile");
-@lines = <seq>;
-close(seq);
-
-open(dom, ">$dom");
-open(tar, ">$target");
-
-shift(@lines);
-shift(@lines);
-
-$domNum = 1;
-while ($line = shift(@lines)){
-	$outFasta = (join "/", $dir, $domNum).'.fasta';
-	open(fasta, ">$outFasta");
-#line1: sequence name	
-	print dom ">$line";
-	print fasta ">$line";
-#line2: number of residues
-	$len = shift(@lines);
-	chomp($len);
-#line3: sequence
-	$line = shift(@lines);
-	print dom "$line\n";
-	chomp($line);
-	print fasta "$line";
-	close(fasta);
-#line4: SS (H:helix, E: strand, C: coil)
-	$outSS = (join "/", $dir, $domNum).'.ss';
-	open(ss, ">$outSS");
-	$line = shift(@lines);
-	for($i = 0; $i < $len; $i++){
-		$ss = substr($line, $i, 1);
-		if ($ss eq "H"){ print ss "1 0 0\n"; }
-		elsif ($ss eq "E"){ print ss "0 1 0\n"; }
-		else{ print ss "0 0 1\n"; }
+	for($j = 1; $j <=10; $j++){
+		$cnt = ($i - 1) * 10 + $j;
+		# sequence profix
+		$seqpro = join "/", $outdir, $cnt;
+		$check = (join "_", $seqpro, $sstype).".txt";
+		if(! -f $check){ print "last sequence: ", $cnt-1,"\n"; last;}
+		`$runcb $seqpro $sstype $satype`;
 	}
-	close(ss);
-#line5: SA (e:exposed, b:buried at 25% threshold)
-	$outSA = (join "/", $dir, $domNum).'.sa';
-	open(sa, ">$outSA");	
-	$line = shift(@lines);
-	for($i = 0; $i < $len; $i++){
-		$sa = substr($line, $i, 1);
-		if ($sa eq "e"){ print sa "1\n"; }
-		else{ print sa "0\n"; }
-	}
-	close(sa);
-#line6: domain number, position
-	shift(@lines);
-#line7: (T/N) domain boundary region
-	$line = shift(@lines);
-	for($i = 0; $i < $len; $i++){
-		$tar = substr($line, $i, 1);
-		if ($tar eq "T"){ print tar "1 "; }
-		else{ print tar "0 "; }
-	}
-	print tar "\n";
-#line8: empty line
-	shift(@lines);
-
-# COMBINE SS AND SA FILES
-	$outF = (join "/", $dir, $domNum).'_ssa.txt';
-	open(ss, "<$outSS");
-	@ssFi = <ss>;
-	close(ss);
-	open(sa, "<$outSA");
-	@saFi = <sa>;
-	close(sa);
-	open(fea, ">$outF");
-	for($i = 0; $i < $len; $i++){
-		$ssF = shift(@ssFi);
-		$saF = shift(@saFi); 
-		chomp($ssF);
-		print fea $ssF." ".$saF;
-	}
-	close(fea);
-	`rm $outSS $outSA`;
-
-	$domNum++;
 }
-
-close(dom, tar);
-

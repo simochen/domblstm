@@ -13,3 +13,8 @@
 5. 对每个片段fasta文件运行 SRATCH 提取特征
 	runScratch.pl dir
 	./getFeature/runScratch.pl ./dataset/multiSSA
+
+6. 从 .ss .ss8 .acc .acc20 中生成特征
+	getSSA.pl sstype[ss,ss8] satype[acc,acc20] seqNum indir (outdir)
+(or getSSAalo.pl)
+	./getSSA.pl ss8 acc20 36 ./dataset/multiSSA ./dataset/multiFea
