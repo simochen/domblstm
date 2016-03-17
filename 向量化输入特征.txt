@@ -15,6 +15,6 @@
 	./getFeature/runScratch.pl ./dataset/multiSSA
 
 6. 从 .ss .ss8 .acc .acc20 中生成特征
-	getSSA.pl sstype[ss,ss8] satype[acc,acc20] seqNum indir (outdir)
+	getSSA.pl sstype[ss,ss8] satype[acc,acc20] segNum indir (outdir)
 (or getSSAalo.pl)
-	./getSSA.pl ss8 acc20 36 ./dataset/multiSSA ./dataset/multiFea
+	./getSSA.pl ss8 acc20 36 ./dataset/multiSSA ./dataset/multi_s8a20
