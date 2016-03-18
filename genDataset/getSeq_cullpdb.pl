@@ -2,7 +2,11 @@
 
 #USAGE: get sequence name and residues from .txt file
 
-$seq = $ARGV[0];
+if(@ARGV==0){
+	$seq = "/home/simochen/Prog/domainDS/cullpdb_pc25_res3.0_R1.0_d160309_chains12283.fasta"
+}else{
+	$seq = $ARGV[0];
+}
 $regpdb = "/home/simochen/Prog/domainDS/cullpdb_seq.fasta";
 
 open(seq, "<$seq");

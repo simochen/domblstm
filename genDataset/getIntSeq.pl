@@ -25,7 +25,7 @@ while($line = shift(@lines)){
 	@cp_pdb = @pdb;
 	$flag = 0;
 	while($seq = shift(@cp_pdb)){
-		if(substr($seq, 1, 5) eq $line){
+		if(substr($seq, 1, 5) eq $str){
 			$res = shift(@cp_pdb);
 			if(length($res) > 80){
 				print seq $seq.$res;
