@@ -16,8 +16,7 @@ close(seq);
 open(pdb, ">$regpdb");
 
 shift(@seqs);
-$line = shift(@seqs);
-while ($line ne ""){
+while ($line = shift(@seqs)){
 	$seqname = lc(substr($line, 0, 4));
 	$seqtype = substr($line, 4, 1);
 	$seq = $seqname.$seqtype;

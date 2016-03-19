@@ -3,8 +3,8 @@
 #USAGE: get sequence name and residues from .txt file
 
 $cath = "/home/simochen/Prog/domainDS/CathDomainSeqs.COMBS.v4.0.0";
-$regpdb = "/home/simochen/Prog/domainDS/cullpdb_seq.list";
-$inlist = "/home/simochen/Prog/domainDS/cullpdb_cath.list";
+$cullpdb = "/home/simochen/Prog/domainDS/cullpdb_sort.fasta";
+$inseq = "/home/simochen/Prog/domainDS/cullpdb_cath_seq.fasta";
 $indom = "/home/simochen/Prog/domainDS/cullpdb_cath.dom";
 
 
@@ -12,20 +12,20 @@ open(cath, "<$cath");
 @cath = <cath>;
 close(cath);
 
-open(pdb, "<$regpdb");
+open(pdb, "<$cullpdb");
 @lines = <pdb>;
 close(pdb);
 
-open(list, ">$inlist");
+open(seq, ">$inseq");
 open(dom, ">$indom");
 
 $cnt = 0;
 while($line = shift(@lines)){
-	chomp($line);
+	$str = substr($line, 1, 5);
 	@cp_cath = @cath;
 	$flag = 0;
 	while($dom = shift(@cp_cath)){
-		if(substr($dom, 12, 5) eq $line){
+		if(substr($dom, 12, 5) eq $str){
 			$dominfo = substr($dom, 12, 7);
 			$res = shift(@cp_cath);
 			print dom ">".$dominfo."\n".$res;
@@ -36,12 +36,15 @@ while($line = shift(@lines)){
 		}
 	}
 	if($flag == 1){
-		print list $line."\n";
+		print seq $line;
+		$line = shift(@lines);
+		print seq $line;
 	}else{
+		shift(@lines);
 		$cnt++;
-		print $line."\t".$cnt."\n";
+		print $str."\t".$cnt."\n";
 	}
 }
 
 close(dom);
-close(list);
+close(seq);
