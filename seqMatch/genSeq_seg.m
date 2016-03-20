@@ -45,3 +45,4 @@ for i = 1:length(md)
     end
 end
 seq_cnt(length(ms)) = cnt;
+%save multi.mat ms md range multi_seq multi_dom seq_cnt seq_poi dom_poi;
