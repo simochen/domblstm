@@ -23,11 +23,18 @@ errlen = 3;
 j = 1;
 olp = ones(1595,2);
 cov = ones(1595,2);
+cnt = 0;
 for i = 1:length(md)
     if sum(md{i}(1:5) ~= ms{j})
+        seq_cnt(j) = cnt;
         j = j+1;
+        cnt = 0;
     end
-    poi(i) = j;
+    cnt = cnt+1;
+    if(cnt == 1)
+        seq_poi(j) = i;
+    end
+    dom_poi(i) = j;
     len = length(multi_dom{i});
     if len < 90
         [range(i,1), range(i,2), olp(i,1), cov(i,1)] = LCS(multi_seq{j}, multi_dom{i}, errlen);
@@ -37,3 +44,4 @@ for i = 1:length(md)
         [mid, range(i,2), olp(i,2), cov(i,2)] = LCS(multi_seq{j}, multi_dom{i}(len-floor(len/num):len), errlen);
     end
 end
+seq_cnt(length(ms)) = cnt;
