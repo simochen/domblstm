@@ -11,3 +11,12 @@ for i = 1 :length(b)
         c = [c b(i)];
     end
 end
+
+linker = [];
+for i = 1:length(ms)
+    for j = 1:seq_cnt(i)-1
+        left = range_mdf(seq_poi(i)+j-1,2);
+        right = range_mdf(seq_poi(i)+j,1);
+        linker = [linker right-left];
+    end
+end
