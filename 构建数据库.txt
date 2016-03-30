@@ -11,6 +11,6 @@
 5. 将得到的序列根据域的编号和数量进行分类：单域(single)、多域(multi)、不连续域(disc)、不确定(unk)
 	classifyMul_cullpdb.pl
    得到 cullpdb_cath_single.fasta (3100)	cullpdb_cath_single.dom (3100)
-	cullpdb_cath_multi.fasta  (1315)	cullpdb_cath_multi.dom  (2975)
-	cullpdb_cath_disc.fasta   (206)	cullpdb_cath_disc.dom	  (283)
-	cullpdb_cath_unk.fasta	   (378)	cullpdb_cath_unk.dom	  (378)
+	cullpdb_cath_multi.fasta  (720)	cullpdb_cath_multi.dom  (1595)
+	cullpdb_cath_disc.fasta   (595)	cullpdb_cath_disc.dom	 (1380)
+	cullpdb_cath_unk.fasta	   (584)	cullpdb_cath_unk.dom	  (661)

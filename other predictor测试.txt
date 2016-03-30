@@ -1,0 +1,21 @@
+一、DOMpro
+1. download dompro1.0 和 sspro4 并解压
+2. 搭建 sspro4
+(1) 修改 /sspro4/configure.pl 文件
+	$install_dir = “/home/chenxiao/sspro4/”;
+(2) 在 /sspro4/ 目录下运行
+	./configure.pl
+
+3. 搭建 dompro1.0
+(1) 修改 /dompro1.0/configure.pl 文件
+	$install_dir = "/home/chenxiao/dompro1.0/";
+	$pspro_dir = "/home/chenxiao/sspro4/";
+(2) 在 /dompro1.0/ 目录下运行
+	./configure.pl
+
+4. 修改 /dompro1.0/script/domain_pre.pl 文件
+   将 domain 预测输出结果写入文件
+
+5. 在数据集上测试 dompro
+	runDompro.pl type[single, multi] start end
+
