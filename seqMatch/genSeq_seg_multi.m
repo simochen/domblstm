@@ -41,8 +41,8 @@ for i = 1:length(md)
         [range(i,1), range(i,2), olp(i,1), cov(i,1)] = LCS(multi_seq{j}, multi_dom{i}, errlen);
     else
         num = 3;
-        [range(i,1), mid, olp(i,1), cov(i,1)] = LCS(multi_seq{j}, multi_dom{i}(1:floor(len/num)), errlen);
-        [mid, range(i,2), olp(i,2), cov(i,2)] = LCS(multi_seq{j}, multi_dom{i}(len-floor(len/num):len), errlen);
+        [range(i,1), mid, olp(i,1), cov(i,1)] = LCS(multi_seq{j}, multi_dom{i}(1:floor(dlen/num)), errlen);
+        [mid, range(i,2), olp(i,2), cov(i,2)] = LCS(multi_seq{j}, multi_dom{i}(dlen-floor(dlen/num):dlen), errlen);
     end
 end
 seq_cnt(length(ms)) = cnt;
