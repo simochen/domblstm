@@ -6,10 +6,11 @@ while ~feof(fid)
     ss{i} = fgetl(fid);
     ss{i} = ss{i}(2:6);
     single_seq{i} =  fgetl(fid);
+    len(i) = length(single_seq{i});
 end
 fclose(fid);
 
-fid = fopen('single_dom_1.txt');
+fid = fopen('single_dom.txt');
 i = 0;
 while ~feof(fid)
     i = i+1;
@@ -43,4 +44,4 @@ p = find(range(:,1)<=3);
 range(p,1) = 1;
 q = find(len_seq-range(:,2)==1);
 range(q,2) = len_seq(q);
-save single.mat ss sd range single_seq single_dom;
+save single.mat ss sd range single_seq single_dom len;

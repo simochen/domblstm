@@ -6,6 +6,7 @@ while ~feof(fid)
     ms{i} = fgetl(fid);
     ms{i} = ms{i}(2:6);
     multi_seq{i} =  fgetl(fid);
+    len(i) = length(multi_seq{i});
 end
 fclose(fid);
 
@@ -35,8 +36,8 @@ for i = 1:length(md)
         seq_poi(j) = i;
     end
     dom_poi(i) = j;
-    len = length(multi_dom{i});
-    if len < 90
+    dlen = length(multi_dom{i});
+    if dlen < 90
         [range(i,1), range(i,2), olp(i,1), cov(i,1)] = LCS(multi_seq{j}, multi_dom{i}, errlen);
     else
         num = 3;
@@ -45,4 +46,4 @@ for i = 1:length(md)
     end
 end
 seq_cnt(length(ms)) = cnt;
-%save multi.mat ms md range multi_seq multi_dom seq_cnt seq_poi dom_poi;
+%save multi.mat ms md range multi_seq multi_dom seq_cnt seq_poi dom_poi len;
