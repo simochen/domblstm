@@ -4,8 +4,8 @@
 
 $cath = "/home/simochen/Prog/domainDS/CathDomainSeqs.COMBS.v4.0.0";
 $cullpdb = "/home/simochen/Prog/domainDS/cullpdb_sort.fasta";
-$inseq = "/home/simochen/Prog/domainDS/cullpdb_cath_seq_1.fasta";
-$indom = "/home/simochen/Prog/domainDS/cullpdb_cath_1.dom";
+$inseq = "/home/simochen/Prog/domainDS/cullpdb_cath_seq.fasta";
+$indom = "/home/simochen/Prog/domainDS/cullpdb_cath.dom";
 
 
 open(cath, "<$cath");
@@ -26,9 +26,9 @@ while($line = shift(@lines)){
 	$flag = 0;
 	while($dom = shift(@cp_cath)){
 		if(substr($dom, 12, 5) eq $str){
-			$dominfo = substr($dom, 12, length($dom)-12);
+			$dominfo = substr($dom, 12, 7);
 			$res = shift(@cp_cath);
-			print dom ">".$dominfo.$res;
+			print dom ">".$dominfo."\n".$res;
 			$flag = 1;
 		}else{
 			shift(@cp_cath);

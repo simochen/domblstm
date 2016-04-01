@@ -26,9 +26,9 @@ while($line = shift(@lines)){
 	$flag = 0;
 	while($dom = shift(@cp_cath)){
 		if(substr($dom, 12, 5) eq $str){
-			$dominfo = substr($dom, 12, 7);
+			$dominfo = substr($dom, 12, length($dom)-12);
 			$res = shift(@cp_cath);
-			print dom ">".$dominfo."\n".$res;
+			print dom ">".$dominfo.$res;
 			$flag = 1;
 		}else{
 			shift(@cp_cath);
