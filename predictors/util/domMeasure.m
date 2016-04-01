@@ -8,7 +8,7 @@ function [n, ndo] = domMeasure(range_pred, range_def)
             if((abs(range_pred(i,1)-range_def(j,1)) <= 20) && (abs(range_pred(i,2)-range_def(j,2)) <= 20))
                 n = n+1;
             end
-            [olp(i,j),r] = overlap(range_pred(i,:),range_def(j,:)); 
+            [olp(i,j),r] = overlap(range_pred(i,:),range_def(j,:));
         end
     end
     rscore = 2*max(olp,[],1)-sum(olp,1);
