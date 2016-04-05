@@ -7,6 +7,12 @@ for i = 1:length(ms)
         flag(i) = 1;
     end
 end
+
+p = find(range(seq_poi,1)<=3);
+range(seq_poi(p),1) = 1;
+q = find(len'-range(seq_poi+seq_cnt-1,2)<=2);
+range(seq_poi(q)+seq_cnt(q)-1,2) = len(q)';
+
 range_mdf = range;
 for i = 1:length(ms)
     range_mdf(seq_poi(i),1) = 1;

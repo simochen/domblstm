@@ -27,6 +27,7 @@ blastpgp 命令解析
 	/home/chenxiao/blast/bin/blastpgp -i fastaIn.fasta -d /home/mpiuser/ur90/uniref90 -a 1 -b 0 -j 3 -h 0.001 -C fastaIn_pid_hostid.chk -o fastaIn_pid_hostid.blast
 
 (2) 查询各 blastpgp 命令参数含义
+-a cpu number
 -e the threshold to reduce false positions
 -j 最大运行次数
 -h e-value cut-off for selecting homologues for the PSSM（默认值0.001）
