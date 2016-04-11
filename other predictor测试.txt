@@ -64,6 +64,11 @@
    结果输出在 [outputDir]/prediction.txt, 格式为
 TARGET_ID | LINKER_ST , LNKER_EN | LNKER_LENGTH | PEAK_VALUE | TARGET_SIZE | PEAK_POS |
 
+7. 批量运行 DROP
+(1) 修改 runDROP、 /Script/MakePSSM.sh MakePSS.sh RunSVMLight.sh
+(2) 在数据集上运行 DROP
+	runDROP.pl $type $start $end
+
 三、ThreaDom
 1. 搭建 I-TASSER2.1
 	将数据库解压到 /I-TASSER2.1/ 路径下
@@ -82,10 +87,16 @@ TARGET_ID | LINKER_ST , LNKER_EN | LNKER_LENGTH | PEAK_VALUE | TARGET_SIZE | PEA
 4. 在 /threadom/ 目录下运行
 	perl CONFIGURATE.pl
 5. Run LOMETS for ThreaDom
-	cd I-TASSER2.1/I-TASSERmod
-  	./runLOMETs4ThreaDom.pl -libdir ~/I-TASSER2.1 -seqname [sequence name] -datadir ~/threa_data.
+	./runLOMETs4ThreaDom.pl -libdir ~/I-TASSER2.1 -seqname [sequence name] -datadir ~/threa_data -javadir /usr/share/java
 6. Run ThreaDOM
  	cd Threadom_path
  	./Threadom.pl -seqname [sequence name]     #domain predition
  	./detectdcd.pl -seqname [sequence name]    #boudary refinement and discontinuous domain detection
  	./draw.pl         #draw the figure of DC-score
+
+7. 在数据集上批量运行 ThreaDom
+	./runThreaDom.pl $type $start $end
+
+*8. domainparser2 为32位程序，且无源代码
+	分别编写 runI-TASSER.pl、runThreadomOnly.pl 将 I-TASSER 与 ThreaDom 分开运行
+	在服务器端运行 I-TASSER，在本地运行 ThreaDom 
