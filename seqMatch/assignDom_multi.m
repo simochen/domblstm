@@ -1,4 +1,4 @@
-%assign domain boundary without N- and C- terminal
+%assign domain boundary with or without N- and C- terminal
 clear all
 load multi.mat
 r = 5;

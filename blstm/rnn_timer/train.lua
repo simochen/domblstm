@@ -38,7 +38,7 @@ local function train(opt, trainset)
 			--torch.save(savefile, model)
 		end
 		if i% opt.print_every == 0 then
-			print(string.format("Iteration %4d ; BCE loss = %6.6f ", i, loss/table.maxn(input)))
+			print(string.format("Iteration %4d ; BCE loss = %6.6f ", i, loss/opt.rho))
 		end
 	end
 	

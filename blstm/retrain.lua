@@ -10,7 +10,7 @@ local function retrain(opt, trainset)
     -- create model and loss/grad evaluation function
     --
     local criterion = nn.SequencerCriterion(nn.bceCriterion())
-	mfile = string.format("hs%d_lr%.0e_w%d_tg123_ep%d.t7",opt.hiddenSize, opt.lr, opt.weight, opt.last_epoch)
+	mfile = string.format("hs%d_lr%.0e_w%d_tg1234_ep%d.t7",opt.hiddenSize, opt.lr, opt.weight, opt.last_epoch)
 	model = torch.load(mfile)
 	
     local params, grads = model:getParameters()
@@ -33,12 +33,17 @@ local function retrain(opt, trainset)
 		model:updateParameters(opt.lr)
 		
 		if i% opt.save_every == 0 then
-			savefile = string.format("hs%d_lr%.0e_w%d_tg%d%d%d_ep%d.t7", opt.hiddenSize, opt.lr, opt.weight, opt.trainG[1], opt.trainG[2], opt.trainG[3], i/opt.save_every+opt.last_epoch)
+			savefile = string.format("hs%d_lr%.0e_w%d_tg%d%d%d%d_ep%d.t7", opt.hiddenSize, opt.lr, opt.weight, opt.trainG[1], opt.trainG[2], opt.trainG[3], opt.trainG[4], i/opt.save_every+opt.last_epoch)
 			print(savefile)
 			torch.save(savefile, model)
 		end
 		if i% opt.print_every == 0 then
-			print(string.format("Iteration %4d ; BCE loss = %6.6f ", i, loss/table.maxn(input)))
+			if table.maxn(input) < opt.rho then
+				den = table.maxn(input)
+			else
+				den = opt.rho
+			end
+			print(string.format("Iteration %4d ; BCE loss = %6.6f ", i, loss/den))
 		end
 		i = i + 1
 	end

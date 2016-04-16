@@ -33,12 +33,18 @@ local function train(opt, trainset)
 		model:forget()
 		
 		if i% opt.save_every == 0 then
-			savefile = string.format("hs%d_lr%.0e_w%d_tg%d%d%d_ep%d.t7", opt.hiddenSize, opt.lr,opt.weight, opt.trainG[1], opt.trainG[2], opt.trainG[3], i/opt.save_every)
+			savefile = string.format("hs%d_lr%.0e_w%d_tg%d%d%d%d_ep%d.t7", opt.hiddenSize, opt.lr,opt.weight, opt.trainG[1], opt.trainG[2], opt.trainG[3], opt.trainG[4], i/opt.save_every)
 			print(savefile)
 			torch.save(savefile, model)
 		end
 		if i% opt.print_every == 0 then
-			print(string.format("Iteration %4d ; BCE loss = %6.6f ", i, loss/table.maxn(input)))
+			if table.maxn(input) < opt.rho then
+				den = table.maxn(input)
+			else
+				den = opt.rho
+			end
+			print(den)
+			print(string.format("Iteration %4d ; BCE loss = %6.6f ", i, loss/den))
 		end
 	end
 	

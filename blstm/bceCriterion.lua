@@ -2,7 +2,7 @@ require 'nn'
 local bceCriterion = torch.class('nn.bceCriterion', 'nn.Criterion')
 
 local eps = 1e-12
-w = 20
+w = 10
 
 function bceCriterion:updateOutput(input, target)
     -- - log(input) * target - log(1 - input) * (1 - target)
@@ -24,9 +24,7 @@ function bceCriterion:updateOutput(input, target)
 
     output = output + torch.sum(buffer)
     output = output - torch.dot(target, buffer)
-	output = output / (w+1)
-
-    
+	 
     self.output = - output
 
     return self.output
@@ -53,7 +51,7 @@ function bceCriterion:updateGradInput(input, target)
 	local p = torch.mul(target, w)
     gradInput:mul(input, 1-w):cmul(target):add(-input):add(p)
     -- - (y - x) / ( x ( 1 + eps -x ) + eps )
-    gradInput:cdiv(buffer):div(w+1)
+    gradInput:cdiv(buffer)
 
     return gradInput
 end

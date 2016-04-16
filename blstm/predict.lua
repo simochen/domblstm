@@ -1,4 +1,4 @@
-local function predict(model, criterion, data)
+local function predict(model, criterion, data, opt)
 	losses = 0;
     
     for i = 1, data.size do
@@ -9,7 +9,12 @@ local function predict(model, criterion, data)
         local output = model:forward(input)
         local loss = criterion:forward(output, target)
 		
-		losses = losses+ loss/table.maxn(input);
+		if table.maxn(input) < opt.rho then
+			den = table.maxn(input)
+		else
+			den = opt.rho
+		end
+		losses = losses+ loss/den;
 	end
 	
     return losses

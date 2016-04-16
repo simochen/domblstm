@@ -11,20 +11,21 @@ local cmd = torch.CmdLine()
 cmd:text()
 cmd:text('Options')
 cmd:option('-lr', 0.001, 'learning rate')
-cmd:option('-weight', 20, 'weight used to balance loss')
+cmd:option('-rho', 1100, 'maximum BPTT steps')
+cmd:option('-weight', 10, 'weight used to balance loss')
 cmd:option('-hiddenSize', 10, 'size of hidden layer')
 cmd:option('-inputSize', 25, 'size of input layer')
 cmd:option('-epoch', 20, 'the trained epoch we use')
-cmd:option('-print_every', 100, 'how many steps between printing out the loss')
-cmd:option('-save_every', 432, 'how many steps between saving the model')
+cmd:option('-print_every', 27, 'how many steps between printing out the loss')
+cmd:option('-save_every', 2880, 'how many steps between saving the model')
 cmd:text()
 
 local opt = cmd:parse(arg)
 
-opt.trainG = torch.Tensor{1,2,3}
-opt.cv = 4
+opt.trainG = torch.Tensor{1,2,3,4}
+opt.cv = 5
 
-mfile = string.format("hs%d_lr%.0e_w%d_tg123_ep%d.t7",opt.hiddenSize, opt.lr, opt.weight, opt.epoch)
+mfile = string.format("hs%d_lr%.0e_w%d_tg1234_ep%d.t7",opt.hiddenSize, opt.lr, opt.weight, opt.epoch)
 model = torch.load(mfile)
 
 local data = loader.CVset(opt, multi_data) --cv dataset
@@ -38,7 +39,23 @@ for i = 1, data.size do
     local output = model:forward(input)
 	
 	outputs[#outputs + 1] = output 
+	if i% opt.print_every ==0 then
+		x={}  
+		y={}  
+		for j=1,250 do
+			table.insert(x,target[j]:squeeze())  
+		   	table.insert(y,output[j]:squeeze())  
+		end  
+  
+		x = torch.Tensor(x)  
+		y = torch.Tensor(y)  
+      
+		pfile = string.format("out_hs%d_lr%.0e_w%d_i%d_ep%d.png",opt.hiddenSize, opt.lr, opt.weight, i/opt.print_every, opt.epoch)
+		gnuplot.pngfigure(pfile)  
+		gnuplot.plot({x},{y})  
+		gnuplot.plotflush()  
+	end
 end
-ofile = string.format("out_hs%d_lr%.0e_w%d_tg123_ep%d.t7",opt.hiddenSize, opt.lr, opt.weight, opt.epoch)
-torch.save(ofile, {outputs, data.targets})
+--ofile = string.format("out_hs%d_lr%.0e_w%d_tg1234_ep%d.t7",opt.hiddenSize, opt.lr, opt.weight, opt.epoch)
+--torch.save(ofile, {outputs, data.targets})
 

@@ -46,9 +46,9 @@ function loader.Trainset(opt, data)
 	trainset.targets = {}
 
 	trainset.idx = 1;
-	trainset.size = 3*data.gsize;
+	trainset.size = 4*data.gsize;
 	
-	for i = 1, 3*data.gsize do
+	for i = 1, 4*data.gsize do
 		k = torch.floor((i-1)/data.gsize)+1;
 		j = i - (k-1)*data.gsize;
 		table.insert(trainset.inputs, i, data.gX[opt.trainG[k]][j]);

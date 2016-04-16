@@ -10,7 +10,7 @@ function create_model(opt)
   ------------------------------------------------------------------------------
     -- OUR MODEL:
   --     lstm -> linear -> sigmoid
-  lstm = nn.FastLSTM(opt.inputSize, opt.hiddenSize)
+  lstm = nn.FastLSTM(opt.inputSize, opt.hiddenSize, opt.rho)
   lstm.usenngraph = true
   
   local model = nn.Sequential()
