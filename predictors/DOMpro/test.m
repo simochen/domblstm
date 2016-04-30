@@ -1,7 +1,8 @@
+addpath ../util
 clear all
 load pred.mat
 load multi.mat
-[trNum, precision, recall, ndo] = evaluate(ms_cnt, ms_poi, md_range, seq_cnt, seq_poi, range);
+ndo = evaluate(ms_cnt, ms_poi, md_range, seq_cnt, seq_poi, range);
 
 sub = find(seq_cnt <= 3);
 s_cnt = ms_cnt(sub);
@@ -16,5 +17,5 @@ for i = 1:length(sub)
 end
 %[trNum, precision, recall, ndo] = evaluate(s_cnt, s_poi, range_pred, cnt, poi, range_def);
 
-%load single.mat
-%[trNum, precision, recall, ndo] = evaluate(ss_cnt, ss_poi, sd_range, ones(1,3100), 1:3100, range);
+load single.mat
+ndo = evaluate(ss_cnt, ss_poi, sd_range, ones(1,3100), 1:3100, range);
