@@ -45,6 +45,6 @@ opt.trainG = torch.Tensor(opt.trainG)
 local multi_data = loader.load_data('multi', opt.r)
 
 local trainset = loader.Trainset(opt, multi_data)
-local cvset = loader.CVset(opt, multi_data)
+local cvset = loader.CVset(opt.cv, multi_data)
 
 model, criterion, args = train(opt, trainset, cvset)

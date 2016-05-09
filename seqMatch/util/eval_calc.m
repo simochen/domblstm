@@ -7,6 +7,7 @@ function obj = eval_calc(obj)
 	obj.f1 = 2* obj.precision * obj.recall/(obj.precision+obj.recall);
     
     if isfield(obj, 'tn')
+        obj.acc = (obj.tp+obj.tn)/(obj.tp+obj.fp+obj.fn+obj.tn);
         obj.mcc = (obj.tp*obj.tn-obj.fp*obj.fn)/...
                    sqrt((obj.tp+obj.fp)*(obj.tp+obj.fn)*(obj.fp+obj.tn)*(obj.tn+obj.fn));
     end

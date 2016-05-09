@@ -62,7 +62,7 @@ d = torch.load(mfile)
 model = d.model
 
 local multi_data = loader.load_data('multi', opt.r)
-local data = loader.Trainset(opt, multi_data) --train dataset
+local data = loader.Trainset(opt.cv, multi_data) --train dataset
 
 outputs = {}
 for i = 1, data.size do

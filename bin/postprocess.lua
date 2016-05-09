@@ -19,6 +19,9 @@ cmd:option('-decay', 'log', 'how learning rate decay(linear, log, recip, no)')
 cmd:option('-rho', 20, 'maximum BPTT steps')
 cmd:option('-weight', 5, 'weight used to balance loss')
 cmd:option('-cv', 5, 'cross-validation group')
+cmd:option('-r', 20, 'domain boundary expand length')
+cmd:option('-type', 'multi', 'sequence type')
+cmd:option('-sg', 1, 'single domain sequence group')
 cmd:option('-epoch', 0, 'the trained epoch we use')
 --rnn layer
 cmd:option('-hiddenSize', '{10}', 'size of hidden layer')
@@ -63,8 +66,12 @@ mfile = paths.concat('../output', opt.savepath, mfile)
 local d = torch.load(mfile)
 local model = d.model
 
-local multi_data = loader.load_data('multi', opt.r)
-local data = loader.CVset(opt, multi_data) --cv dataset
+local cvdata = loader.load_data(opt.type, opt.r)
+if opt.type == 'multi' then
+	data = loader.CVset(opt.cv, cvdata)
+elseif opt.type == 'single' then
+	data = loader.CVset(opt.sg, cvdata) --cv dataset
+end
 
 local y = {}
 for i = 1, data.size do
@@ -81,7 +88,11 @@ end
 
 y = torch.Tensor{y}
 -- save to mat file
-local outfile = string.format("%s.mat", base)
+if opt.type == 'multi' then
+	outfile = string.format("%s.mat", base)
+elseif opt.type == 'single' then
+	outfile = string.format("%s_sg%d.mat", base, opt.sg)
+end
 outfile = paths.concat('../output', opt.savepath, outfile)
 
 matio.save(outfile,  {y = y})

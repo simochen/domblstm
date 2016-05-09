@@ -81,14 +81,14 @@ function loader.Trainset(opt, data)
 	return trainset
 end
 
-function loader.CVset(opt, data)
+function loader.CVset(cvNum, data)
 	local cvset = {}
 
 	cvset.idx = 1;
 	cvset.size = data.gsize;
 	
-	cvset.inputs = data.gX[opt.cv];
-	cvset.targets = data.gy[opt.cv];	
+	cvset.inputs = data.gX[cvNum];
+	cvset.targets = data.gy[cvNum];	
 	
 	function cvset:next_sample()
 		X = cvset.inputs[cvset.idx];
