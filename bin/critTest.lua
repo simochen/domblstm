@@ -4,17 +4,16 @@ require 'rnn'
 require 'bceCriterion'
 local matio = require 'matio'
 
-local crit = nn.bceCriterion()
+local crit = nn.bceCriterion(2)
 input = torch.Tensor{0.01}
 target = torch.Tensor{1}
-a = crit:forward(input, target,20)
-b = crit:backward(input, target,20)
+a = crit:forward(input, target)
+b = crit:backward(input, target)
 print(a)
 print(b)
 
 c = 1.1
-d = 1.3
-print(torch.log(c))
+--print(torch.log(c))
 
 --data = torch.load("hs20_lr1e-04_w10_tg1234_ep1.t7")
 --print(data[1])

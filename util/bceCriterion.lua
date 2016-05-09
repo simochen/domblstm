@@ -1,8 +1,17 @@
 require 'nn'
-local bceCriterion = torch.class('nn.bceCriterion', 'nn.Criterion')
+local bceCriterion, parent = torch.class('nn.bceCriterion', 'nn.Criterion')
 
 local eps = 1e-12
-local w = 5
+
+function bceCriterion:__init(weight)
+    parent.__init(self)
+    
+    if weight ~= nil then
+        self.weight = weight
+    else
+    	self.weight = 1
+    end
+end
 
 function bceCriterion:updateOutput(input, target)
     -- - log(input) * target - log(1 - input) * (1 - target)
@@ -10,12 +19,13 @@ function bceCriterion:updateOutput(input, target)
     self.buffer = self.buffer or input.new()
 
     local buffer = self.buffer
+    local weight = self.weight
     local output
 	
     buffer:resizeAs(input)
 	
     -- w * log(input) * target
-    buffer:add(input, eps):log():mul(w)
+    buffer:add(input, eps):log():mul(weight)
 
     output = torch.dot(target, buffer)
 
@@ -40,6 +50,7 @@ function bceCriterion:updateGradInput(input, target)
     self.buffer = self.buffer or input.new()
 
     local buffer = self.buffer
+    local weight = self.weight
     local gradInput = self.gradInput
 
     buffer:resizeAs(input)
@@ -48,8 +59,8 @@ function bceCriterion:updateGradInput(input, target)
 
     gradInput:resizeAs(input)
     -- **(y - x)**--  w * y - x - (w - 1) * x * y
-	local p = torch.mul(target, w)
-    gradInput:mul(input, 1-w):cmul(target):add(-input):add(p)
+	local p = torch.mul(target, weight)
+    gradInput:mul(input, 1-weight):cmul(target):add(-input):add(p)
     -- - (y - x) / ( x ( 1 + eps -x ) + eps )
     gradInput:cdiv(buffer)
 
