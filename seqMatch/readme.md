@@ -23,6 +23,8 @@
 					{X, y, yi, len, range, rangei}
 					
 ###Post-processing
+######Post-process and Get prediction
+
 	pred = postproc(raw_y, sub_vec, opt)
 	[y = winSmooth(x, win)]
 	
@@ -30,15 +32,23 @@
 	opt = {win, cutoff, minBlen, skip, inComb, termComb, isShow, pauseTime[-1]}
 	pred = {y, label, range}
 	
+######Plot and visualize prediction [embed in `postproc`]
+		
+	post_plot(pred, sub_vec, opt)
+	
+	pred = {y, range}
+	sub_vec = {len, y, yi}
+	opt = {cutoff, pauseTime[-1]}
+	
 ###Evaluate
 1.	evaluate model output
 	
 		eval = evaluate(pred, def)
 		
-		def = {y, range}
+		def = {label, range}
 		def need to be pre-defined
 		eg. for i = 1: numel(vec{2})
-				def(i).y = vec{2}(i).yi
+				def(i).label = vec{2}(i).yi
 				def(i).range = vec{2}(i).rangei
 			end
 		eval = {m, t, ndo,
@@ -77,7 +87,7 @@
 		obj = eval_calc(obj)
 		
 		obj: [input]{tp, fp, fn} -> [output]{precision, recall, f1}
-			 [input]{tp, fp, fn, tn} -> [output]{precision, recall, f1, mcc}
+			 [input]{tp, fp, fn, tn} -> [output]{precision, recall, f1, acc, mcc}
 			 
 3. print evaluation
 		

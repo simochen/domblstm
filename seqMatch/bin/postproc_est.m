@@ -1,15 +1,15 @@
 clear all
 addpath ../util
 load('../data/process/mg_vec_r20.mat');
-opt = struct('win', 5, 'cutoff', 0.65, 'minBlen', 5, 'skip', 20, 'termComb', 30, 'inComb', 40, 'isShow', 0, 'pauseTime', -1);
-param.cv = 2;
-param.ep = 86;
+opt = struct('win', 5, 'cutoff', [0.6, 0.65, 0.7], 'minBlen', 5, 'skip', 20, 'termComb', 30, 'inComb', 40, 'isShow', 0, 'pauseTime', -1);
+param.cv = 5;
+param.ep = 312;
 param.sg = 1;
 file = sprintf('../data/postproc/log_hs10_w5_cv%d_ep%d.mat', param.cv, param.ep);
 load(file)
 pred = postproc(y, vec_group{param.cv}, opt);
 for i = 1: numel(vec_group{param.cv})
-    def(i).y = vec_group{param.cv}(i).yi;
+    def(i).label = vec_group{param.cv}(i).yi;
     def(i).range = vec_group{param.cv}(i).rangei;
 end
 meval = evaluate(pred, def);
@@ -20,7 +20,7 @@ file = sprintf('../data/postproc/log_hs10_w5_cv%d_ep%d_sg%d.mat', param.cv, para
 load(file)
 pred = postproc(y, vec_group{param.sg}, opt);
 for i = 1: numel(vec_group{param.sg})
-    def(i).y = vec_group{param.sg}(i).yi;
+    def(i).label = vec_group{param.sg}(i).yi;
     def(i).range = vec_group{param.sg}(i).rangei;
 end
 seval = evaluate(pred, def);

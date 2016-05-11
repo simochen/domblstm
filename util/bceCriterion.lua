@@ -3,9 +3,15 @@ local bceCriterion, parent = torch.class('nn.bceCriterion', 'nn.Criterion')
 
 local eps = 1e-12
 
-function bceCriterion:__init(weight)
+function bceCriterion:__init(weight, sizeAverage)
     parent.__init(self)
     
+    if sizeAverage ~= nil then
+        self.sizeAverage = sizeAverage
+    else
+        self.sizeAverage = true
+    end
+
     if weight ~= nil then
         self.weight = weight
     else
@@ -35,6 +41,10 @@ function bceCriterion:updateOutput(input, target)
     output = output + torch.sum(buffer)
     output = output - torch.dot(target, buffer)
     
+    if self.sizeAverage then
+        output = output / input:nElement()
+    end
+
     self.output = - output
 
     return self.output
@@ -64,5 +74,9 @@ function bceCriterion:updateGradInput(input, target)
     -- - (y - x) / ( x ( 1 + eps -x ) + eps )
     gradInput:cdiv(buffer)
 
+    if self.sizeAverage then
+        gradInput:div(target:nElement())
+    end
+    
     return gradInput
 end

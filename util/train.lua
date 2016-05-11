@@ -47,6 +47,7 @@ local function train(opt, trainset, cvset)
 	args.minerr = 999
 	local tloss = {}
 	local cvloss = {}
+	trainset:randomize()
     for i = 1, opt.epoch*trainset.size do
 		input, target = trainset:next_sample()
 		model:zeroGradParameters()
@@ -58,6 +59,7 @@ local function train(opt, trainset, cvset)
         local gradOutput = criterion:backward(output, target)
         model:backward(input, gradOutput)
 		-- update
+		model:updateGradParameters(opt.momentum)
 		model:updateParameters(args.lr)
 		
 		
@@ -109,8 +111,9 @@ local function train(opt, trainset, cvset)
 				mfile = paths.concat('../output', opt.savepath, mfile)
 				torch.save(mfile, {model = model, args = args, tloss = tloss, cvloss = cvloss})
 			end
+
+			trainset:randomize()
 		end
-		
 	end
 	
     return model, criterion, args

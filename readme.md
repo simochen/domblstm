@@ -10,9 +10,11 @@
 -decay		学习速率衰减方式	默认为’log’(‘linear’,’no’)
 -saturate	学习速率衰减次数	默认为300
 -rho 		最大后向传播次数 	默认为20
--weight		代价权重(无法改变)	默认为5
+-momentum	momentum		默认为0
+-cv			交叉验证集		默认为5
+-weight		代价权重			默认为5
 -epoch		训练集循环次数	默认为1000
--earlystop	最大不降低的epoch数	默认为50
+-earlystop	最大不降低的epoch数	默认为30
 -save_every	保存模型间隔		默认为3(epoch)
 		
 **rnn layer**
@@ -37,7 +39,9 @@
 -decay		学习速率衰减方式	默认为’log’(‘linear’,’no’)
 -saturate	学习速率衰减次数	默认为300
 -rho 		最大后向传播次数 	默认为20
--weight		代价权重(无法改变)	默认为5
+-momentum	momentum		默认为0
+-cv			交叉验证集		默认为5
+-weight		代价权重			默认为5
 -last_epoch	上次训练epoch数	默认为0
 -earlystop	最大不降低的epoch数	默认为50
 -save_every	保存模型间隔		默认为3(epoch)
@@ -59,7 +63,7 @@
 **Training**
 -lr 		学习速率 			默认为1e-4
 -decay		学习速率衰减方式	默认为’log’(‘linear’,’no’)
--weight		代价权重(无法改变)	默认为5
+-weight		代价权重			默认为5
 -cv			交叉验证集		默认为5
 -epoch		采用的模型训练次数	默认为0
 
@@ -100,7 +104,7 @@
 -lr 		学习速率 			默认为1e-4
 -decay		学习速率衰减方式	默认为’log’(‘linear’,’no’)
 -rho 		最大后向传播次数 	默认为20
--weight		代价权重(无法改变)	默认为5
+-weight		代价权重			默认为5
 -cv			交叉验证集		默认为5
 -epoch		采用的模型训练次数	默认为0
 -print_every模型输出间隔		默认为99
@@ -121,7 +125,7 @@
 -lr 		学习速率 			默认为1e-4
 -decay		学习速率衰减方式	默认为’log’(‘linear’,’no’)
 -rho 		最大后向传播次数 	默认为20
--weight		代价权重(无法改变)	默认为5
+-weight		代价权重			默认为5
 -cv			交叉验证集		默认为5
 -epoch		采用的模型训练次数	默认为0
 

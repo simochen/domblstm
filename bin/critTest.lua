@@ -4,11 +4,19 @@ require 'rnn'
 require 'bceCriterion'
 local matio = require 'matio'
 
-local crit = nn.bceCriterion(2)
-input = torch.Tensor{0.01}
-target = torch.Tensor{1}
+local crit = nn.bceCriterion(5, false)
+input = torch.Tensor{0.01, 0.99}
+target = torch.Tensor{1, 0}
 a = crit:forward(input, target)
 b = crit:backward(input, target)
+print(a)
+print(b)
+
+local criterion = nn.BCECriterion()
+input = torch.Tensor{0.01, 0.99}
+target = torch.Tensor{1, 0}
+a = criterion:forward(input, target)
+b = criterion:backward(input, target)
 print(a)
 print(b)
 

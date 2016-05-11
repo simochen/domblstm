@@ -1,10 +1,10 @@
 function eval = evaluate(pred, def)
     %USAGE: eval = evaluate(pred, def)
     %pred -> {y, label, range}
-    %def -> {y, range}
+    %def -> {label, range}
     %[def need to be pre-defined]
     %[eg. for i = 1:numel(vec{2})
-    %         def(i).y = vec{2}(i).yi;
+    %         def(i).label = vec{2}(i).yi;
     %         def(i).range = vec{2}(i).rangei;
     %     end]
     %eval -> {m,t,ndo,dom{tp,fp,fn},bdr{tp,fp,fn},res{tp,fp,fn,tn}}
@@ -34,7 +34,7 @@ function eval = evaluate(pred, def)
         eval.bdr.fp = eval.bdr.fp + bdr.fp;
         eval.bdr.fn = eval.bdr.fn + bdr.fn;
         
-        res = residueMeasure(pred(i).label, def(i).y);
+        res = residueMeasure(pred(i).label, def(i).label);
         eval.res.tp = eval.res.tp + res.tp;
         eval.res.fp = eval.res.fp + res.fp;
         eval.res.fn = eval.res.fn + res.fn;

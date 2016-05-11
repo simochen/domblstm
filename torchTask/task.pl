@@ -1,17 +1,19 @@
 #!/usr/bin/perl
 
-@opt = ([1,72],
-		[1,102],
-		[2,56],
-		[2,86],
-		[3,85],
-		[3,115],
-		[4,184],
-		[4,214],
-		[5,167],
-		[5,217]); 
+@opt = (
+		#[1,90],
+		#[1,140],
+		#[2,56],
+		#[2,86],
+		#[3,215],
+		#[3,297],
+		#[4,184],
+		#[4,214],
+		[5,255],
+		[5,312]
+		); 
 for $i (0 .. $#opt ){
-	$cmd = "cd ../bin/; th postprocess.lua -savepath 'r20' -cv $opt[$i][0] -epoch $opt[$i][1]";
+	$cmd = "cd ../bin/; th postprocess.lua -savepath 'r20_mot0.2' -cv $opt[$i][0] -epoch $opt[$i][1]";
 	`$cmd`;
 	print "multi is done\n";
 	

@@ -8,7 +8,7 @@ function eval_print(eval)
     eval.res = eval_calc(eval.res);
     
     fprintf('\n\n\n=============== prediction evaluation ===============\n');
-    fprintf('\t\tTP\tFP\tTN\tprec.\t\trecall\t\tF1\t\tACC\t\tMCC\n');
+    fprintf('\t\tTP\tFP\tFN\tprec.\t\trecall\t\tF1\t\tACC\t\tMCC\n');
     fprintf('residue\t\t%d\t%d\t%d\t%.6f\t%.6f\t%.6f\t%.6f\t%.6f\n', ...
             eval.res.tp, eval.res.fp, eval.res.fn, ...
             eval.res.precision, eval.res.recall, eval.res.f1, eval.res.acc, eval.res.mcc);

@@ -16,9 +16,9 @@ function loader.load_data(type, r)
 		error('undefined domain type' .. tostring(type))
 	end
 
-	matfile = string.format('../data/group5_r%d.mat', r)
-	g_X = matio.load(matfile, Xkey) --table[key:1-720]
-	g_y = matio.load(matfile, ykey) --table[key:1-720]
+	local matfile = string.format('../data/group5_r%d.mat', r)
+	local g_X = matio.load(matfile, Xkey) --table[key:1-720]
+	local g_y = matio.load(matfile, ykey) --table[key:1-720]
  
 	local data = {}
 	data.gsize = #g_y/5;
@@ -26,8 +26,8 @@ function loader.load_data(type, r)
 	data.gX = {}	--table[key:5*144]
 	data.gy = {}	--table[key:5*144]
 	
-	sub_gX = {}
-	sub_gy = {}
+	local sub_gX = {}
+	local sub_gy = {}
 	for i = 1, #g_y do
 		j = i - torch.floor((i-1)/data.gsize)*data.gsize;
 		table.insert(sub_gX, j, g_X[i])
@@ -56,10 +56,14 @@ function loader.Trainset(opt, data)
 		table.insert(trainset.inputs, i, data.gX[opt.trainG[k]][j]);
 		table.insert(trainset.targets, i, data.gy[opt.trainG[k]][j]);
 	end
+
+	function trainset:randomize()
+		trainset.I = torch.randperm(trainset.size)
+	end
 	
 	function trainset:next_sample()
-		X = trainset.inputs[trainset.idx];
-		y = trainset.targets[trainset.idx];
+		local X = trainset.inputs[trainset.I[trainset.idx]];
+		local y = trainset.targets[trainset.I[trainset.idx]];
 
 	    trainset.idx = trainset.idx + 1
 
@@ -67,8 +71,8 @@ function loader.Trainset(opt, data)
 	        trainset.idx = 1
 	    end
 
-	    table_X = {}
-	    table_y = {}
+	    local table_X = {}
+	    local table_y = {}
 
 	    for i = 1,X:size(1) do
 	      table.insert(table_X, X[{{i},{}}])
@@ -91,8 +95,8 @@ function loader.CVset(cvNum, data)
 	cvset.targets = data.gy[cvNum];	
 	
 	function cvset:next_sample()
-		X = cvset.inputs[cvset.idx];
-		y = cvset.targets[cvset.idx];
+		local X = cvset.inputs[cvset.idx];
+		local y = cvset.targets[cvset.idx];
 
 	    cvset.idx = cvset.idx + 1
 
@@ -100,8 +104,8 @@ function loader.CVset(cvNum, data)
 	        cvset.idx = 1
 	    end
 
-	    table_X = {}
-	    table_y = {}
+	    local table_X = {}
+	    local table_y = {}
 
 	    for i = 1,X:size(1) do
 	      table.insert(table_X, X[{{i},{}}])

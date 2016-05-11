@@ -1,0 +1,23 @@
+addpath ../../../seqMatch/util
+load ../../../seqMatch/data/process/multi_vec_r20.mat
+load ../dataproc/multi_pred.mat
+for i = 1:numel(vec)
+    def(i).label = vec(i).yi;
+    def(i).range = vec(i).rangei;
+end
+meval = evaluate(pred, def);
+eval_print(meval);
+
+g = 1;
+load ../../../seqMatch/data/process/sg_vec.mat
+load ../../../seqMatch/data/process/sgroup.mat
+load ../dataproc/single_pred.mat
+for i = 1:numel(vec_group{g})
+    def(i).label = vec_group{g}(i).yi;
+    def(i).range = vec_group{g}(i).rangei;
+end
+for i = 1:numel(sg{g})
+    sub_pred(i).label = pred(sg{g}(i)).label;
+    sub_pred(i).range = pred(sg{g}(i)).label;
+eval = evaluate(pred, def);
+eval_print(eval);

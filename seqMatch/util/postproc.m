@@ -6,11 +6,18 @@ function pred = postproc(raw_y, sub_vec, opt)
 %pred -> {y, label, range}
     p = 1;
     for i = 1: numel(sub_vec)
+        if sub_vec(i).len <= 200
+            cutoff = opt.cutoff(1);
+        elseif sub_vec(i).len <= 500
+            cutoff = opt.cutoff(2);
+        else
+            cutoff = opt.cutoff(3);
+        end
         y = raw_y(p:p+sub_vec(i).len-1);
         p = p+sub_vec(i).len;
         pred(i).y = winSmooth(y, opt.win);
         
-        pred(i).label = (pred(i).y >= opt.cutoff);
+        pred(i).label = (pred(i).y >= cutoff);
         diff = zeros(1, sub_vec(i).len);
         diff(1) = -1;
         for j = 2: sub_vec(i).len
@@ -74,7 +81,7 @@ function pred = postproc(raw_y, sub_vec, opt)
             str = sprintf('Prediction of sequence: %d', i);
             title(str);
             hold on;
-            plot([x(1) x(end)],[opt.cutoff opt.cutoff]);
+            plot([x(1) x(end)],[cutoff cutoff]);
             legend('label', 'output', 'cut-off');
             for j = 2: numel(bdr)-1
                 plot([bdr(j) bdr(j)], [0 1], 'k');

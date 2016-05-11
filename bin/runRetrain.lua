@@ -14,9 +14,11 @@ cmd:option('-minlr', 0.000001, 'minimum learning rate')
 cmd:option('-decay', 'log', 'how learning rate decay(linear, log, no)')
 cmd:option('-saturate', 300, 'epoch at which linear decayed LR will reach minlr')
 cmd:option('-rho', 20, 'maximum BPTT steps')
+cmd:option('-momentum', 0, 'momentum')
 cmd:option('-cv', 5, 'cross-validation group')
 cmd:option('-r', 20, 'domain boundary expand length')
 cmd:option('-weight', 5, 'weight used to balance loss')
+cmd:option('-sizeAverage', 0, 'if criterion do size average')
 cmd:option('-last_epoch', 0, 'last trained epoch')
 cmd:option('-earlystop', 30, 'maximum number of epochs to wait to find a better local minima for early-stopping')
 cmd:option('-save_every', 3, 'how many epochs between saving the model')
@@ -41,6 +43,12 @@ for i = 1, 5 do
 	end
 end
 opt.trainG = torch.Tensor(opt.trainG)
+
+if opt.sizeAverage == 0 then
+	opt.sizeAverage = false
+else
+	opt.sizeAverage = true
+end
 
 local multi_data = loader.load_data('multi', opt.r)
 

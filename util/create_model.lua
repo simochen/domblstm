@@ -48,7 +48,7 @@ function create_model(opt)
   ------------------------------------------------------------------------------
   -- LOSS FUNCTION
   ------------------------------------------------------------------------------
-  local criterion = nn.SequencerCriterion(nn.bceCriterion())
+  local criterion = nn.SequencerCriterion(nn.bceCriterion(opt.weight, opt.sizeAverage))
   
   ------------------------------------------------------------------------------
   -- CUDA

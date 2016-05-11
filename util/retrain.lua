@@ -28,7 +28,7 @@ local function retrain(opt, trainset, cvset)
     ------------------------------------------------------------------------
     -- create model and loss/grad evaluation function
     --
-    local criterion = nn.SequencerCriterion(nn.bceCriterion())
+    local criterion = nn.SequencerCriterion(nn.bceCriterion(opt.weight, opt.sizeAverage))
 	
 	mfile = string.format("%s_ep%d.t7", base, opt.last_epoch)
 	mfile = paths.concat('../output', opt.savepath, mfile)
@@ -56,6 +56,9 @@ local function retrain(opt, trainset, cvset)
         local gradOutput = criterion:backward(output, target)
         model:backward(input, gradOutput)
 		-- update
+		if opt.momentum > 0 then
+			model:updateGradParameters(opt.momentum)
+		end
 		model:updateParameters(args.lr)
 		
 		if i% trainset.size == 0 then
